@@ -5,15 +5,18 @@ if (process.env.NODE_ENV !== 'production') {
 const PORT = process.env.PORT || 3000;
 
 // External dependencies
-const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
+const express = require('express');
 
 // Internal dependencies
 const routes = require('./routes');
 
 // Wire up application
 const app = express();
-app.use(bodyParser.urlencoded({ 'extended': 'true' }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cors());
 app.use('/', routes);
 
 // Start server
