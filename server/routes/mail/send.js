@@ -5,19 +5,23 @@ module.exports = async function(req, res) {
 
   const prefix = 'YMBC';
   const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    host: 'smtp.gmail.com',
+    service: process.env.EMAIL_SERVICE,
+    host: process.env.EMAIL_HOST,
     auth: {
-      user: 'tester.user.3030@gmail.com',
-      pass: 'TesterUser3030'
+      user: process.env.EMAIL_USERNAME,
+      pass: process.env.EMAIL_PASSWORD
     }
   });
+
+  if (process.ENV.EMAIL_PREFIX) {
+    req.body.subject = `${process.ENV.EMAIL_PREFIX}: ${req.body.subject}`;
+  }
 
   try {
     let info = await transporter.sendMail({
       from: `${req.body.name}, <${req.body.emailAddress}>`,
       to: req.body.to,
-      subject: `${prefix}: ${req.body.subject}`,
+      subject: req.body.subject,
       html: '<h3 style=\'display:inline-block\'>From: </h3>' +
         `<span style='display:inline-block;margin-left:.25rem'>${req.body.emailAddress}</span><br />` +
         '<h3 style=\'display:inline-block\'>Name: </h3>' +

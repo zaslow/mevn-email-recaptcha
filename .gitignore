@@ -1,22 +1,24 @@
+# MacOS
 .DS_Store
-
-client/node_modules
-server/node_modules
-client/dist
 
 # local env files
 .env.local
 .env.*.local
 
-# Log files
-client/npm-debug.log*
-server/npm-debug.log*
-
 # Editor directories and files
 .idea
 .vscode
-*.suo
-*.ntvs*
 *.njsproj
+*.ntvs*
 *.sln
+*.suo
 *.sw?
+
+# webapp build
+client/dist
+
+# dependencies
+node_modules
+
+# Log files
+npm-debug.log*

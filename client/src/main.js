@@ -1,12 +1,12 @@
 import Vue from 'vue'
-import axios from 'axios'
+// import axios from 'axios'
 import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.min.css'
-import 'vue-material/dist/theme/default.css'
+import 'vue-material/dist/theme/black-green-light.css'
 import App from './App.vue'
 
 Vue.config.productionTip = false
-Vue.prototype.$http = axios
+// Vue.prototype.$http = axios
 Vue.use(VueMaterial)
 
 new Vue({

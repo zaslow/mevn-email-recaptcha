@@ -1,0 +1,28 @@
+{
+  "name": "evn-mail-recaptcha",
+  "version": "0.1.0",
+  "description": "Send & retrieve emails using Express, Vue, & Node",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"cd server && npm start\" \"cd client && npm run serve\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zaslow/evn-mail-recaptcha.git"
+  },
+  "keywords": [
+    "express",
+    "vue",
+    "node",
+    "recaptcha"
+  ],
+  "author": "zaslow",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zaslow/evn-mail-recaptcha/issues"
+  },
+  "homepage": "https://github.com/zaslow/evn-mail-recaptcha#readme",
+  "devDependencies": {
+    "concurrently": "^5.1.0"
+  }
+}
