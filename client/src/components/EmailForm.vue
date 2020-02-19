@@ -79,6 +79,9 @@
             sitekey="6Le1YNMUAAAAAHlCt5_hmZe9LxnSlWtAl-iUbBAP"
             v-model="form.recaptcha"
           />
+          <span class="error" v-if="showRecaptchaError">
+            Please verify you are not a robot.
+          </span>
         </div>
       </md-card-content>
 
@@ -123,7 +126,8 @@
       mailRequest: {
         sending: false,
         status: null
-      }
+      },
+      showRecaptchaError: false
     }),
     validations: {
       form: {
@@ -135,9 +139,6 @@
           required
         },
         subject: {
-          required
-        },
-        recaptcha: {
           required
         }
       }
@@ -158,16 +159,16 @@
       clearForm () {
         this.$v.$reset()
         /* eslint-disable-next-line no-unused-vars */
-        Object.keys(this.$v.form).forEach(field => field = null);
+        Object.keys(this.$v.form).forEach(field => field = null)
       },
       async sendMail () {
         this.mailRequest.sending = true
 
-        let mailData = { to: globals.inboxEmail }
-        Object.keys(this.$v.form).forEach(field => mailData[field] = this.$v.form[field].$model)
-
         try {
-          await ApiService.post('/mail', mailData)
+          await ApiService.post('/mail', {
+            to: globals.inboxEmail,
+            ...this.$v.form.$model
+          })
           this.clearForm()
           this.mailRequest.sending = false
           this.mailRequest.status = 'sent'
@@ -179,13 +180,17 @@
       validateMsg () {
         this.$v.$touch()
 
-        if (!this.$v.$invalid) {
+        if (!this.form.recaptcha) {
+          this.showRecaptchaError = true
+        } else if (!this.$v.$invalid) {
           this.sendMail()
         }
       },
-      async verifyRecaptcha (data) {
+      async verifyRecaptcha (token) {
         try {
-          await ApiService.post('/recaptcha', data)
+          await ApiService.post('/recaptcha', { token })
+          this.form.recaptcha = true
+          this.showRecaptchaError = false
         } catch(e) {
           return e;
         }
@@ -209,5 +214,11 @@
   .recaptcha {
     margin-bottom: 1rem;
     margin-top: 1rem;
+
+    .error {
+      color: var(--md-theme-default-fieldvariant, #ff1744);
+      float: left;
+      font-size: 12px;
+    }
   }
 </style>

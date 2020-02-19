@@ -1,41 +1,51 @@
+const compile = require('es6-template-strings/compile');
+const resolveToString = require('es6-template-strings/resolve-to-string');
+const fs = require('fs');
 const nodemailer = require('nodemailer');
 
+const host = process.env.EMAIL_HOST || 'smtp.gmail.com';
+const pass = process.env.EMAIL_PASSWORD;
+const prefix = process.env.EMAIL_PREFIX;
+const service = process.env.EMAIL_SERVICE || 'gmail';
+const user = process.env.EMAIL_USERNAME;
+
 module.exports = async function(req, res) {
+  let template;
+
   console.log(req.body);
 
-  const prefix = 'YMBC';
   const transporter = nodemailer.createTransport({
-    service: process.env.EMAIL_SERVICE,
-    host: process.env.EMAIL_HOST,
+    service,
+    host,
     auth: {
-      user: process.env.EMAIL_USERNAME,
-      pass: process.env.EMAIL_PASSWORD
+      user,
+      pass
     }
   });
 
-  if (process.ENV.EMAIL_PREFIX) {
-    req.body.subject = `${process.ENV.EMAIL_PREFIX}: ${req.body.subject}`;
+  if (prefix) {
+    req.body.subject = `${prefix}: ${req.body.subject}`;
   }
 
   try {
-    let info = await transporter.sendMail({
-      from: `${req.body.name}, <${req.body.emailAddress}>`,
-      to: req.body.to,
-      subject: req.body.subject,
-      html: '<h3 style=\'display:inline-block\'>From: </h3>' +
-        `<span style='display:inline-block;margin-left:.25rem'>${req.body.emailAddress}</span><br />` +
-        '<h3 style=\'display:inline-block\'>Name: </h3>' +
-        `<span style='display:inline-block;margin-left:.25rem'>${req.body.name}</span><br />` +
-        '<h3 style=\'display:inline-block\'>Subject: </h3>' +
-        `<span style='display:inline-block;margin-left:.25rem'>${req.body.subject}</span><br />` +
-        '<h3>Message: </h3>' +
-        `<p>${req.body.content}</p>`
+    const template = compile(fs.readFileSync(`${__dirname}/message.html`, 'utf8'));
+    const { content, emailAddress, name, subject, to } = req.body;
+    const info = await transporter.sendMail({
+      from: `${req.body.name || 'Anonymous'}, <${req.body.emailAddress}>`,
+      to,
+      subject,
+      html: resolveToString(template, {
+        content,
+        emailAddress,
+        name,
+        subject
+      })
     });
 
     console.log('Message sent: %s', info.messageId);
     res.json(info);
   } catch(e) {
-    console.log('Sending failed: %e', e);
+    console.log('Sending failed: ', e);
     res.status(500).send({ error: e });
   }
 };
