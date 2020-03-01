@@ -1,31 +1,35 @@
 <template>
   <div id="app">
-    <EmailForm />
+    <md-tabs class="app-menu md-transparent" md-alignment="centered">
+      <md-tab md-label="Home" to="/home"></md-tab>
+      <md-tab md-label="Suggestions" to="/suggestions"></md-tab>
+    </md-tabs>
+  
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-  import EmailForm from './components/EmailForm.vue'
-
   export default {
-    name: 'app',
-    components: {
-      EmailForm
-    }
+    name: 'app'
   }
 </script>
 
-<style>
-  html.md-theme-default {
-    background-color: ghostwhite;
+<style lang="scss">
+  #app {
+    color: #2c3e50;
+    font-variant: small-caps;
+    margin-top: 60px;
+    text-align: center;
   }
 
-  #app {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-    margin-top: 60px;
+  .app-menu {
+    margin-bottom: 2rem;
+
+    .md-tab {
+      font-size: 1.5rem;
+      font-variant: small-caps;
+      text-transform: none !important;
+    }
   }
 </style>
