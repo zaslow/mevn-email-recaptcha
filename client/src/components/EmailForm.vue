@@ -108,7 +108,6 @@
   import { validationMixin } from 'vuelidate'
   import { email, required } from 'vuelidate/lib/validators'
 
-  import globals from '../globals.js'
   import ApiService from '../services/ApiService.js'
 
   export default {
@@ -165,10 +164,10 @@
         this.mailRequest.sending = true
 
         try {
-          await ApiService.post('/mail', {
-            to: globals.inboxEmail,
-            ...this.$v.form.$model
-          })
+          const address = await ApiService.get('/mail/address')
+
+          await ApiService.post('/mail', { to: address.data, ...this.$v.form.$model })
+
           this.clearForm()
           this.mailRequest.sending = false
           this.mailRequest.status = 'sent'

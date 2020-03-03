@@ -1,12 +1,14 @@
-const PORT = process.env.PORT || 3000;
-
 // External dependencies
 const bodyParser = require('body-parser');
 const cors = require('cors');
+require('dotenv-defaults').config();
 const express = require('express');
 
 // Internal dependencies
 const routes = require('./routes');
+
+// Fetch environment variables
+const PORT = process.env.PORT;
 
 // Wire up application
 const app = express();

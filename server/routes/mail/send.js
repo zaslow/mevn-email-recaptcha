@@ -42,10 +42,10 @@ module.exports = async function(req, res) {
       })
     });
 
-    console.log('Message sent: %s', info.messageId);
+    console.log('Message sent - ', info.messageId);
     res.json(info);
-  } catch(e) {
-    console.log('Sending failed: ', e);
-    res.status(500).send({ error: e });
+  } catch(error) {
+    console.log('Sending failed - ', error);
+    res.status(500).send({ error });
   }
 };
