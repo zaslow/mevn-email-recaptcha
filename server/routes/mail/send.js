@@ -3,13 +3,13 @@ const resolveToString = require('es6-template-strings/resolve-to-string');
 const fs = require('fs');
 const nodemailer = require('nodemailer');
 
-const host = process.env.EMAIL_HOST || 'smtp.gmail.com';
+const host = process.env.EMAIL_HOST;
 const pass = process.env.EMAIL_PASSWORD;
 const prefix = process.env.EMAIL_PREFIX;
-const service = process.env.EMAIL_SERVICE || 'gmail';
+const service = process.env.EMAIL_SERVICE;
 const user = process.env.EMAIL_USERNAME;
 
-module.exports = async function(req, res) {
+module.exports = async (req, res) => {
   let template;
 
   console.log(req.body);

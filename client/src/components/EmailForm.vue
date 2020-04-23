@@ -143,10 +143,10 @@
       }
     },
     methods: {
-      expireRecaptcha () {
+      expireRecaptcha() {
         this.$refs.recaptcha.reset()
       },
-      getValidationClass (fieldName) {
+      getValidationClass(fieldName) {
         const field = this.$v.form[fieldName]
 
         if (field) {
@@ -155,12 +155,12 @@
           }
         }
       },
-      clearForm () {
+      clearForm() {
         this.$v.$reset()
         /* eslint-disable-next-line no-unused-vars */
         Object.keys(this.$v.form).forEach(field => field = null)
       },
-      async sendMail () {
+      async sendMail() {
         this.mailRequest.sending = true
 
         try {
@@ -176,7 +176,7 @@
           this.mailRequest.status = 'error'
         }
       },
-      validateMsg () {
+      validateMsg() {
         this.$v.$touch()
 
         if (!this.form.recaptcha) {
@@ -185,7 +185,7 @@
           this.sendMail()
         }
       },
-      async verifyRecaptcha (token) {
+      async verifyRecaptcha(token) {
         try {
           await ApiService.post('/recaptcha', { token })
           this.form.recaptcha = true

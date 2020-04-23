@@ -5,10 +5,11 @@ require('dotenv-defaults').config();
 const express = require('express');
 
 // Internal dependencies
+const db = require('./db');
 const routes = require('./routes');
 
 // Fetch environment variables
-const PORT = process.env.PORT;
+const port = process.env.PORT;
 
 // Wire up application
 const app = express();
@@ -18,6 +19,6 @@ app.use(cors());
 app.use('/', routes);
 
 // Start server
-const server = app.listen(PORT, () => {
+const server = app.listen(port, () => {
   console.log('Application running on port ' + server.address().port);
 });

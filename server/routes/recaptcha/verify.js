@@ -16,7 +16,7 @@ module.exports = async function(req, res) {
       }
     };
 
-    // I hate that Google requires POST with query params
+    // Google requires POST with query params
     const recaptchaRes = await axios.post(recaptchaReq.uri, {}, recaptchaReq.config);
 
     if (recaptchaRes.data.success) {

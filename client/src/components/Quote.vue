@@ -11,10 +11,10 @@
                       md-large-size-50
                       quote-card">
         <md-card-content class="md-layout md-alignment-space-between-center">
-          <p class="md-title quote-content">"{{ quote.content }}"</p>
+          <p class="md-title quote-content">"{{ dailyQuote.content }}"</p>
           <div class="md-layout md-alignment-center-right">
             <p class="md-layout-item md-size-33 md-subheading quote-author">
-              - {{ quote.author }}
+              - {{ dailyQuote.author }}
             </p>
           </div>
         </md-card-content>
@@ -24,15 +24,27 @@
 </template>
 
 <script>
+  import ApiService from '../services/ApiService.js'
+
   export default {
+    created() {
+      this.getDailyQuote().then(quote => (this.dailyQuote = quote.data));
+    },
     data: () => ({
-      quote: {
-        author: 'Larry Bird',
-        content: 'A winner is someone who recognizes his God-given talents,'
-          + ' works his tail off to develop them into skills,'
-          + ' and uses these skills to accomplish his goals.'
+      dailyQuote: {
+        author: null,
+        content: null
       }
-    })
+    }),
+    methods: {
+      async getDailyQuote() {
+        try {
+          return await ApiService.get('/quote')
+        } catch(e) {
+          return e
+        }
+      }
+    }
   }
 </script>
 
