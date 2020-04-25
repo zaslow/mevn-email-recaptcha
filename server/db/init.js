@@ -25,4 +25,6 @@ client.connect(`${dbUri}/${dbName}`, (err, conn) => {
     if (err) throw err;
     console.log(`Inserted 1 quote by ${quote.author}.`);
   });
+
+  conn.close();
 });

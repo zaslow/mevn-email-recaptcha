@@ -4,7 +4,7 @@ import globals from '../globals.js'
 export default class ApiService {
 
   static get(path, data) {
-    let uri = `${globals.apiEndpointBase}${path}`;
+    let uri = `${globals.apiEndpointBase}${path}`
 
     if (data) {
       uri += `?${Object.keys(data).map(key => key + '=' + data[key]).join('&')}`

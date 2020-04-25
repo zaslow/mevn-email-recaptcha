@@ -12,10 +12,10 @@ module.exports = (req, res) => {
     conn.db(dbName).collection('quotes').findOne({}, (e, result) => {
       if (e) res.status(500).send(e);
 
-      console.log(`Found 1 quote by ${result.author}.`)
+      console.log(`Found 1 quote by ${result.author || 'anonymous'}.`)
       res.json(result);
-
-      db.close();
     });
+
+    conn.close();
   });
 };

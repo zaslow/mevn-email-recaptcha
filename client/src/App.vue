@@ -1,6 +1,12 @@
 <template>
   <div id="app">
-    <md-tabs class="app-menu md-transparent" md-alignment="centered" md-sync-route>
+    <div>current route: {{path}}</div>
+    <md-tabs
+      class="app-menu md-transparent"
+      md-alignment="centered"
+      md-sync-route
+      v-if="path !== '/set-quote'">
+
       <md-tab md-label="Home" to="/home"></md-tab>
       <md-tab md-label="Suggestions" to="/suggestions"></md-tab>
       <md-tab md-label="About" to="/about"></md-tab>
@@ -12,7 +18,18 @@
 
 <script>
   export default {
-    name: 'app'
+    name: 'app',
+    created() {
+      this.path = this.$route.path
+    },
+    data: () => ({
+      path: null
+    }),
+    watch: {
+      $route(to) {
+        this.path = to.path
+      }
+    }
   }
 </script>
 
