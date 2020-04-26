@@ -6,6 +6,7 @@ import { About, Home, SetQuote, Suggestions } from './components'
 Vue.use(VueRouter)
 
 export default new VueRouter({
+  mode: 'history',
   routes: [{
     path: '/about',
     component: About

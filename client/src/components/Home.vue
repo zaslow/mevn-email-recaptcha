@@ -14,7 +14,7 @@
           <p class="md-title quote-content">"{{ dailyQuote.content }}"</p>
           <div class="md-layout md-alignment-center-right">
             <p class="md-layout-item md-size-33 md-subheading quote-author">
-              - {{ dailyQuote.author }}
+              - {{ dailyQuote.name }}
             </p>
           </div>
         </md-card-content>
@@ -24,7 +24,7 @@
 </template>
 
 <script>
-  import ApiService from '../services/ApiService.js'
+  import { ApiService } from '../services'
 
   export default {
     created() {
@@ -32,14 +32,14 @@
     },
     data: () => ({
       dailyQuote: {
-        author: null,
+        name: null,
         content: null
       }
     }),
     methods: {
       async getDailyQuote() {
         try {
-          return await ApiService.get('/quote')
+          return await ApiService.get('/quote/last-set')
         } catch(e) {
           return e
         }

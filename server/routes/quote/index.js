@@ -1,11 +1,11 @@
 const express = require('express');
 
-const find = require('./find');
-// const insert = require('./insert');
+const lastSet = require('./lastSet');
+// const save = require('./save');
 
 const quote = express.Router();
 
-quote.get('/', find);
-// quote.post('/', insert);
+quote.get('/last-set', lastSet);
+// quote.post('/', save);
 
 module.exports = quote;

@@ -11,12 +11,13 @@ module.exports = async () => {
     return err;
   });
 
-  try {
-    await conn.db(dbName).createCollection('quotes');
-    console.log('Collection \'quotes\' created.')
-  } catch(e) {
-    console.log(e);
-  } finally {
-    conn.close();
-  }
-}
+  const res = await conn.db(dbName).collection('quotes')
+    .find()
+    .limit(1)
+    .sort({ $natural: -1 })
+    .toArray();
+  console.log(`Found 1 quote by ${res[0].author || 'anonymous'}.`);
+  conn.close();
+
+  return res[0];
+};

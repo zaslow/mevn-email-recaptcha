@@ -3,6 +3,8 @@ const resolveToString = require('es6-template-strings/resolve-to-string');
 const fs = require('fs');
 const nodemailer = require('nodemailer');
 
+const insert = require('../../db').insert;
+
 const host = process.env.EMAIL_HOST;
 const pass = process.env.EMAIL_PASSWORD;
 const prefix = process.env.EMAIL_PREFIX;
@@ -27,9 +29,11 @@ module.exports = async (req, res) => {
     req.body.subject = `${prefix}: ${req.body.subject}`;
   }
 
+  const { content, emailAddress, name, subject, to } = req.body;
+
   try {
+    const dbRecord = await insert({ content, name });
     const template = compile(fs.readFileSync(`${__dirname}/message.html`, 'utf8'));
-    const { content, emailAddress, name, subject, to } = req.body;
     const info = await transporter.sendMail({
       from: `${req.body.name || 'Anonymous'}, <${req.body.emailAddress}>`,
       to,
@@ -37,6 +41,7 @@ module.exports = async (req, res) => {
       html: resolveToString(template, {
         content,
         emailAddress,
+        id: dbRecord._id,
         name,
         subject
       })

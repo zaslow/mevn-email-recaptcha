@@ -1,18 +1,30 @@
 <template>
   <div>
-    <div>ID: {{ id }}</div>
+    <p v-if="!loading">{{ result }}</p>
     <router-link to="/home">Return to Home</router-link>
   </div>
 </template>
 
 <script>
+  // import { ApiService } from '../services'
+
   export default {
     created() {
-      this.id = this.$route.query.id
+      this.setDailyQuote()
     },
-    data: () => ({
-      id: null
-    })
+    data: () => ({ loading: true }),
+    methods: {
+      async setDailyQuote() {
+        try {
+          // await ApiService.post('/quote', { id: this.$route.query.id })
+          this.result = `Quote (ID #{this.$route.query.id}) of the day has been updated.`
+          this.loading = false
+        } catch(e) {
+          this.result = `Failed to update quote of the day: ${e}.`
+          this.loading = false
+        }        
+      }
+    }
   }
 </script>
 

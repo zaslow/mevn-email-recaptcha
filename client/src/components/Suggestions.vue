@@ -166,7 +166,15 @@
         try {
           const address = await ApiService.get('/mail/address')
 
-          await ApiService.post('/mail', { to: address.data, ...this.$v.form.$model })
+          const { content, emailAddress, name, subject } = this.$v.form.$model
+
+          await ApiService.post('/mail', {
+            content,
+            emailAddress,
+            name,
+            subject,
+            to: address.data
+          })
 
           this.clearForm()
           this.mailRequest.sending = false
