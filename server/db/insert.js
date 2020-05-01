@@ -1,13 +1,7 @@
-const client = require('mongodb').MongoClient;
-
-const dbName = process.env.DB_NAME;
-const dbUri = process.env.DB_URI;
+const dbInstance = require('./instance');
 
 module.exports = async msg => {
-  const conn = await client.connect(`${dbUri}/${dbName}`).catch(err => {
-    console.log(err);
-    return err;
-  });
+  const mongo = await dbInstance();
 
   let quote = {
     ...msg,
@@ -15,9 +9,9 @@ module.exports = async msg => {
     lastSelected: null
   };
 
-  const res = await conn.db(dbName).collection('quotes').insertOne(quote);
+  const res = await mongo.db.collection('quotes').insertOne(quote);
   console.log(`Inserted quote ${quote._id} by ${quote.name || 'Anonymous'}.`);
-  conn.close();
+  mongo.conn.close();
 
-  return quote;
+  return quote; 
 };

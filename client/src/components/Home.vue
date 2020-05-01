@@ -10,8 +10,10 @@
                       md-medium-size-66
                       md-large-size-50
                       quote-card">
-        <md-card-content class="md-layout md-alignment-space-between-center">
-          <p class="md-title quote-content">"{{ dailyQuote.content }}"</p>
+        <md-card-content class="md-layout md-alignment-center quote">
+          <p class="md-layout-item md-size-100 md-title quote-content">
+            "{{ dailyQuote.content }}"
+          </p>
           <div class="md-layout md-alignment-center-right">
             <p class="md-layout-item md-size-33 md-subheading quote-author">
               - {{ dailyQuote.name }}
@@ -53,12 +55,12 @@
     margin-bottom: 1rem;
   }
 
-  .quote-author {
-    text-align: right;
+  .quote-card {
+    padding: 1rem 2rem;
   }
 
-  .quote-card {
-    min-height: 12rem;
+  .quote-author {
+    text-align: right;
   }
 
   .quote-content {

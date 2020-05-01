@@ -1,22 +1,21 @@
-const mongodb = require('mongodb');
+const dbInstance = require('./instance');
 
-const client = mongodb.MongoClient;
-
-const dbName = process.env.DB_NAME;
-const dbUri = process.env.DB_URI;
+const defaultQuote = {
+  content: 'A winner is someone who recognizes his God-given talents,'
+    + ' works his tail off to develop them into skills,'
+    + ' and uses these skills to accomplish his goals.',
+  name: 'Larry Bird'
+};
 
 module.exports = async () => {
-  const conn = await client.connect(`${dbUri}/${dbName}`).catch(err => {
-    console.log(err);
-    return err;
-  });
+  const mongo = await dbInstance();
 
   try {
-    await conn.db(dbName).createCollection('quotes');
+    await mongo.db.createCollection('quotes');
     console.log('Collection \'quotes\' created.')
   } catch(e) {
     console.log(e);
   } finally {
-    conn.close();
+    mongo.conn.close();
   }
 }
