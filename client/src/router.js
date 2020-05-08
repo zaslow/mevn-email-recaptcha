@@ -15,7 +15,10 @@ export default new VueRouter({
     component: Home
   }, {
     path: '/set-quote',
-    component: SetQuote
+    component: SetQuote,
+    meta: {
+      hideNav: true
+    }
   }, {
     path: '/suggestions',
     component: Suggestions

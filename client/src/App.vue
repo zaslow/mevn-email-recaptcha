@@ -1,11 +1,10 @@
 <template>
   <div id="app">
-    <div>current route: {{path}}</div>
     <md-tabs
       class="app-menu md-transparent"
       md-alignment="centered"
       md-sync-route
-      v-if="path !== '/set-quote'">
+      v-if="showNav">
 
       <md-tab md-label="Home" to="/home"></md-tab>
       <md-tab md-label="Suggestions" to="/suggestions"></md-tab>
@@ -20,14 +19,19 @@
   export default {
     name: 'app',
     created() {
-      this.path = this.$route.path
+      this.setNavVisibility(this.$route)
     },
     data: () => ({
-      path: null
+      showNav: null
     }),
+    methods: {
+      setNavVisibility(route) {
+        this.showNav = !route.meta.hideNav
+      }
+    },
     watch: {
       $route(to) {
-        this.path = to.path
+        this.setNavVisibility(to)
       }
     }
   }
