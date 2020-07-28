@@ -13,5 +13,5 @@ module.exports = async msg => {
   console.log(`Inserted quote ${quote._id} by ${quote.name || 'Anonymous'}.`);
   mongo.conn.close();
 
-  return quote; 
+  return quote;
 };

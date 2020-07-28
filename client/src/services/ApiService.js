@@ -16,4 +16,8 @@ export default class ApiService {
   static post(path, data) {
     return axios.post(`${globals.apiEndpointBase}${path}`, data)
   }
+
+  static put(path, data) {
+    return axios.put(`${globals.apiEndpointBase}${path}`, data)
+  }
 }

@@ -30,7 +30,7 @@
 
   export default {
     created() {
-      this.getDailyQuote().then(quote => (this.dailyQuote = quote.data));
+      this.getDailyQuote().then(quote => (this.dailyQuote = quote.data))
     },
     data: () => ({
       dailyQuote: {
@@ -41,7 +41,7 @@
     methods: {
       async getDailyQuote() {
         try {
-          return await ApiService.get('/quote/last-set')
+          return await ApiService.get('/quote')
         } catch(e) {
           return e
         }

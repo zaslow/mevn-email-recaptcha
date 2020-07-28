@@ -6,7 +6,7 @@
 </template>
 
 <script>
-  // import { ApiService } from '../services'
+  import { ApiService } from '../services'
 
   export default {
     created() {
@@ -16,8 +16,8 @@
     methods: {
       async setDailyQuote() {
         try {
-          // await ApiService.post('/quote', { id: this.$route.query.id })
-          this.result = `Quote (ID #{this.$route.query.id}) of the day has been updated.`
+          await ApiService.put('/quote', { id: this.$route.query.id })
+          this.result = `Quote (ID ${this.$route.query.id}) of the day has been updated.`
           this.loading = false
         } catch(e) {
           this.result = `Failed to update quote of the day: ${e}.`

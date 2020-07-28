@@ -5,10 +5,9 @@ module.exports = async () => {
 
   const [res] = await mongo.db.collection('quotes')
     .find()
-    .limit(1)
-    .sort({ $natural: -1 })
+    .sort({ lastSelected: -1 })
     .toArray();
-  console.log(`Found 1 quote by ${res.author || 'anonymous'}.`);
+  console.log(`Found 1 quote by ${res.name || 'anonymous'}.`);
   mongo.conn.close();
 
   return res;
