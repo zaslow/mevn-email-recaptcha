@@ -4,6 +4,7 @@
   "description": "Send & retrieve emails using Express, Vue, & Node",
   "main": "index.js",
   "scripts": {
+    "install": "concurrently \"cd server && npm i\" \"cd client && npm i\"",
     "start": "concurrently \"cd server && npm start\" \"cd client && npm run serve\""
   },
   "repository": {
@@ -11,6 +12,7 @@
     "url": "git+https://github.com/zaslow/evn-mail-recaptcha.git"
   },
   "keywords": [
+    "mongodb",
     "express",
     "vue",
     "node",
